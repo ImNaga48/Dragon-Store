@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Dragon Store | Produk Digital Premium</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar - Responsive Fixed -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-dragon"></i>
+                <div class="logo-text">
+                    <span class="logo-main">DRAGON STORE</span>
+                    <span class="logo-since">since 2025</span>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu Toggle -->
+            <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+            
+            <div class="nav-menu" id="navMenu">
+                <a onclick="showPage('home')" id="nav-home" class="nav-link active">
+                    <i class="fas fa-home"></i>
+                    <span>Beranda</span>
+                </a>
+                <a onclick="showPage('products')" id="nav-products" class="nav-link">
+                    <i class="fas fa-cube"></i>
+                    <span>Produk</span>
+                </a>
+                <a onclick="showPage('payment')" id="nav-payment" class="nav-link">
+                    <i class="fas fa-qrcode"></i>
+                    <span>Payment</span>
+                </a>
+                <a onclick="showPage('order-tutorial')" id="nav-order-tutorial" class="nav-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Cara Order</span>
+                </a>
+                <a onclick="showPage('terms')" id="nav-terms" class="nav-link">
+                    <i class="fas fa-file-contract"></i>
+                    <span>Syarat & Ketentuan</span>
+                </a>
+                <a onclick="showPage('privacy')" id="nav-privacy" class="nav-link">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Privasi</span>
+                </a>
+            </div>
+            
+            <div class="nav-extra">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Halaman Beranda -->
+        <div id="home" class="page active-page">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <h1 class="glitch-text">DRAGON STORE</h1>
+                    <p class="hero-subtitle">Premium Digital Products • Manual Process • 24/7 Support</p>
+                    <div class="hero-badges">
+                        <span class="badge"><i class="fas fa-shield-alt"></i> 100% Aman</span>
+                        <span class="badge"><i class="fas fa-clock"></i> Proses Max 1 Hari</span>
+                        <span class="badge"><i class="fas fa-gem"></i> Premium</span>
+                        <span class="badge"><i class="fas fa-headset"></i> 24/7</span>
+                    </div>
+                    <button onclick="openOrderModal()" class="btn-primary">
+                        <i class="fas fa-shopping-cart"></i>
+                        Mulai Pemesanan
+                    </button>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <i class="fas fa-users"></i>
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Pelanggan</span>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-download"></i>
+                        <span class="stat-number">1.2K+</span>
+                        <span class="stat-label">Produk Terjual</span>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-star"></i>
+                        <span class="stat-number">4.9</span>
+                        <span class="stat-label">Rating</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Info Penting -->
+            <section class="info-penting">
+                <div class="info-card warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div class="info-content">
+                        <h3>⚠️ Kebijakan Pengiriman & Refund</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Proses manual maksimal 1 x 24 jam</li>
+                            <li><i class="fas fa-check"></i> Lebih dari 1 hari? <span class="highlight">REFUND 100%</span></li>
+                            <li><i class="fas fa-check"></i> Transaksi bukan kesalahan admin = NO REFUND</li>
+                            <li><i class="fas fa-check"></i> Harap baca deskripsi produk sebelum order</li>
+                            <li><i class="fas fa-check"></i> <strong>Membeli berarti paham konsekuensi</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Featured Categories - Digital Products -->
+            <section class="categories">
+                <h2 class="section-title"><i class="fas fa-cubes"></i> Kategori Produk Digital</h2>
+                <div class="category-grid" style="grid-template-columns: repeat(2, 1fr);">
+                    <div class="category-card">
+                        <i class="fab fa-youtube"></i>
+                        <h3>Aplikasi Premium</h3>
+                        <p>• YouTube<br>• Alight Motion<br>• Viu</p>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-bug"></i>
+                        <h3>Aplikasi Bug</h3>
+                        <p>• DarkKnife</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Why Choose Us - Digital Focus -->
+            <section class="why-us">
+                <h2 class="section-title"><i class="fas fa-check-circle"></i> Kenapa Belanja di Dragon Store?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>Proses Max 1 Hari</h3>
+                        <p>Pengiriman manual maksimal 1x24 jam. Lebih dari itu? REFUND 100%</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-halved"></i>
+                        </div>
+                        <h3>Garansi Refund</h3>
+                        <p>Refund 100% jika proses >1 hari (kesalahan admin)</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3>Support 24/7</h3>
+                        <p>Customer service siap membantu via WhatsApp & Email</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <h3>Harga Termurah</h3>
+                        <p>Harga kompetitif untuk produk digital premium</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-rotate"></i>
+                        </div>
+                        <h3>No Refund Policy</h3>
+                        <p>Transaksi bukan kesalahan admin = NO REFUND</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h3>Aman & Terpercaya</h3>
+                        <p>Transaksi aman, data pelanggan terjaga</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Popular Products Preview -->
+            <section class="popular-products">
+                <h2 class="section-title"><i class="fas fa-fire"></i> Produk Populer</h2>
+                <div class="popular-grid" id="popular-products">
+                    <!-- Akan diisi JavaScript -->
+                </div>
+            </section>
+        </div>
+
+        <!-- Halaman Produk Digital -->
+        <div id="products" class="page">
+            <div class="products-header">
+                <h1 class="page-title"><i class="fas fa-cube"></i> Katalog Produk Digital</h1>
+                <div class="product-filters">
+                    <button class="filter-btn active" onclick="filterProducts('all')">Semua</button>
+                    <button class="filter-btn" onclick="filterProducts('Aplikasi Premium')">Aplikasi Premium</button>
+                    <button class="filter-btn" onclick="filterProducts('Aplikasi Bug')">Aplikasi Bug</button>
+                </div>
+            </div>
+            
+            <!-- Info Pengiriman -->
+            <div class="shipping-info">
+                <i class="fas fa-info-circle"></i>
+                <span>Proses manual maksimal 1x24 jam. Lebih dari 1 hari? REFUND 100%.</span>
+                <span class="no-refund">Transaksi bukan kesalahan admin = NO REFUND</span>
+            </div>
+            
+            <div id="product-detail-container" class="product-grid">
+                <!-- Produk akan di-load via JavaScript -->
+            </div>
+        </div>
+
+        <!-- Halaman Payment -->
+        <div id="payment" class="page">
+            <h1 class="page-title"><i class="fas fa-qrcode"></i> Pembayaran QRIS</h1>
+            <div class="payment-wrapper">
+                <div class="payment-card">
+                    <div class="qris-container">
+                        <img src="images/qris-dragon.png" alt="QRIS Dragon Store" class="qris-img" onerror="this.src='https://via.placeholder.com/300x300?text=Scan+QRIS+Dragon+Store'">
+                    </div>
+                    <div class="payment-info">
+                        <h3><i class="fas fa-info-circle"></i> Cara Pembayaran:</h3>
+                        <ol class="payment-steps">
+                            <li><span class="step-number">1</span> Buka aplikasi pembayaran (GoPay, OVO, Dana, ShopeePay, LinkAja)</li>
+                            <li><span class="step-number">2</span> Pilih menu "Scan QRIS" atau "Bayar QR"</li>
+                            <li><span class="step-number">3</span> Scan QR Code di samping</li>
+                            <li><span class="step-number">4</span> Masukkan jumlah sesuai total belanja</li>
+                            <li><span class="step-number">5</span> Konfirmasi pembayaran ke admin via WhatsApp</li>
+                        </ol>
+                        
+                        <!-- Info Penting Payment -->
+                        <div class="payment-warning">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <div>
+                                <strong>⚠️ PENTING:</strong>
+                                <p>• Proses manual maksimal 1x24 jam</p>
+                                <p>• Jika lebih dari 1 hari → REFUND 100%</p>
+                                <p>• Transaksi bukan kesalahan admin = NO REFUND</p>
+                                <p>• Simpan bukti transfer Anda</p>
+                            </div>
+                        </div>
+                        
+                        <div class="payment-note">
+                            <i class="fas fa-clock"></i>
+                            <span>Konfirmasi pembayaran via WhatsApp untuk mempercepat proses</span>
+                        </div>
+                        
+                        <div class="payment-contact">
+                            <p><i class="fas fa-envelope"></i> Email: dragonstore2026@gmail.com</p>
+                            <p><i class="fab fa-whatsapp"></i> WhatsApp: +62 896-7579-7762</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Halaman Cara Order -->
+        <div id="order-tutorial" class="page">
+            <h1 class="page-title"><i class="fas fa-shopping-cart"></i> Cara Order</h1>
+            <div class="tutorial-container">
+                <div class="tutorial-card">
+                    <div class="tutorial-step">
+                        <span class="step-badge">1</span>
+                        <div class="step-content">
+                            <h3>Cek Informasi Produk</h3>
+                            <p>Pilih produk yang ingin dibeli, baca deskripsi dan harga dengan teliti. Pastikan produk sesuai dengan kebutuhan Anda.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tutorial-step">
+                        <span class="step-badge">2</span>
+                        <div class="step-content">
+                            <h3>Tanyakan Stok Produk</h3>
+                            <p>Hubungi admin via WhatsApp untuk menanyakan ketersediaan stok produk yang diinginkan. <span class="highlight-warning">Jika membayar tanpa menanyakan stok dan stok kosong, maka uang ditahan hingga restock dan diproses sesuai pesanan.</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="tutorial-step">
+                        <span class="step-badge">3</span>
+                        <div class="step-content">
+                            <h3>Lakukan Pembayaran</h3>
+                            <p>Transfer sesuai total harga ke QRIS yang tersedia di halaman Payment. Simpan bukti pembayaran.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tutorial-step">
+                        <span class="step-badge">4</span>
+                        <div class="step-content">
+                            <h3>Tunggu Proses 1x24 Jam</h3>
+                            <p>Produk akan diproses manual maksimal 1x24 jam. Jika lebih dari 1 hari, Anda berhak mendapat refund 100%.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tutorial-note">
+                        <i class="fas fa-lightbulb"></i>
+                        <p><strong>Tips:</strong> Selalu konfirmasi pembayaran ke admin via WhatsApp untuk mempercepat proses pengiriman.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Halaman Syarat & Ketentuan -->
+        <div id="terms" class="page">
+            <h1 class="page-title"><i class="fas fa-file-contract"></i> Syarat & Ketentuan</h1>
+            <div class="terms-container">
+                <div class="terms-card">
+                    <div class="terms-section">
+                        <h3><i class="fas fa-exclamation-triangle" style="color: #ff4d4d;"></i> Kebijakan Refund</h3>
+                        <ul class="terms-list">
+                            <li><i class="fas fa-times-circle" style="color: #ff4d4d;"></i> Semua transaksi <strong>NO REFUND</strong> (kecuali kesalahan penjual)</li>
+                            <li><i class="fas fa-check-circle" style="color: #00ff9d;"></i> Refund 100% jika proses >1 hari (kesalahan admin)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="terms-section">
+                        <h3><i class="fas fa-users"></i> Akun Sharing & Garansi</h3>
+                        <ul class="terms-list">
+                            <li><i class="fas fa-exclamation-circle"></i> Jika beli akun sharing dan nabrak (kena bentrok login), <strong>tidak usah rewel</strong>. Itu risiko akun sharing.</li>
+                            <li><i class="fas fa-exclamation-circle"></i> Jika beli akun tanpa garansi dan akun di-suspen, <strong>tidak usah rewel</strong>. Tidak ada garansi untuk produk tanpa garansi.</li>
+                            <li><i class="fas fa-info-circle"></i> Akun private: jika bermasalah (bukan kesalahan pemakaian), bisa lapor admin untuk diganti baru.</li>
+                            <li><i class="fas fa-info-circle"></i> Akun sharing: tidak akan diganti baru karena sudah berbagi dengan pengguna lain.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="terms-section">
+                        <h3><i class="fas fa-ban"></i> Larangan</h3>
+                        <ul class="terms-list">
+                            <li><i class="fas fa-ban" style="color: #ff4d4d;"></i> Dilarang menjual ulang semua produk yang ada di sini.</li>
+                            <li><i class="fas fa-ban" style="color: #ff4d4d;"></i> Dilarang menyalahgunakan produk untuk hal ilegal.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="terms-section">
+                        <h3><i class="fas fa-shopping-cart"></i> Kebijakan Stok</h3>
+                        <ul class="terms-list">
+                            <li><i class="fas fa-clock"></i> Jika membayar tanpa menanyakan stok dan ternyata stok kosong, maka uang <strong>ditahan hingga restock</strong> dan akan diproses sesuai yang dipesan.</li>
+                            <li>Tidak ada refund untuk kasus stok kosong jika customer tidak konfirmasi stok terlebih dahulu.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="terms-footer">
+                        <p><i class="fas fa-gavel"></i> <strong>Dengan melakukan pembelian, Anda dianggap telah membaca, memahami, dan menyetujui semua syarat & ketentuan yang berlaku.</strong></p>
+                        <div class="terms-warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span>MEMBELI BERARTI PAHAM KONSEKUENSI</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Halaman Kebijakan Privasi -->
+        <div id="privacy" class="page">
+            <h1 class="page-title"><i class="fas fa-shield-alt"></i> Kebijakan Privasi</h1>
+            <div class="privacy-container">
+                <div class="privacy-card">
+                    <div class="privacy-section">
+                        <h3><i class="fas fa-lock"></i> Perlindungan Data</h3>
+                        <p>Kami menjaga <strong>100% data customer</strong>. Informasi pribadi Anda (nama, email, nomor WA) tidak akan pernah dijual, disebarluaskan, atau disalahgunakan oleh pihak manapun.</p>
+                    </div>
+                    
+                    <div class="privacy-section">
+                        <h3><i class="fas fa-database"></i> Data yang Kami Kumpulkan</h3>
+                        <ul class="privacy-list">
+                            <li><i class="fas fa-user"></i> Nama (untuk keperluan order)</li>
+                            <li><i class="fas fa-envelope"></i> Email (untuk pengiriman produk digital)</li>
+                            <li><i class="fab fa-whatsapp"></i> Nomor WhatsApp (untuk komunikasi order)</li>
+                            <li><i class="fas fa-credit-card"></i> Bukti pembayaran (hanya untuk verifikasi)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="privacy-section">
+                        <h3><i class="fas fa- exchange-alt"></i> Penggunaan Data</h3>
+                        <p>Data Anda hanya digunakan untuk:</p>
+                        <ul class="privacy-list">
+                            <li>Proses pemesanan dan pengiriman produk</li>
+                            <li>Komunikasi terkait order</li>
+                            <li>Konfirmasi pembayaran</li>
+                            <li>Customer support</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="privacy-section">
+                        <h3><i class="fas fa-key"></i> Keamanan Akun</h3>
+                        <div class="privacy-subsection">
+                            <h4>Akun Private:</h4>
+                            <p>Jika akun private bermasalah (bukan karena kesalahan pemakaian), <strong>akan diganti baru</strong>. Hubungi admin dengan menyertakan bukti pembelian.</p>
+                        </div>
+                        <div class="privacy-subsection">
+                            <h4>Akun Sharing:</h4>
+                            <p>Akun sharing <strong>tidak akan diganti baru</strong> karena sifatnya berbagi dengan pengguna lain. Risiko bentrok login sudah menjadi konsekuensi pembelian akun sharing.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="privacy-section">
+                        <h3><i class="fas fa-cookie-bite"></i> Keamanan Transaksi</h3>
+                        <p>Semua transaksi diproses melalui sistem pembayaran yang aman. Kami tidak menyimpan data kartu kredit atau informasi finansial sensitif lainnya.</p>
+                    </div>
+                    
+                    <div class="privacy-footer">
+                        <p>Dengan berbelanja di Dragon Store, Anda menyetujui kebijakan privasi ini. Kebijakan dapat berubah sewaktu-waktu dan akan diinformasikan melalui halaman ini.</p>
+                        <p><i class="fas fa-calendar"></i> Terakhir diperbarui: 2025</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Pemesanan -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-shopping-bag"></i> Pilih Produk Digital</h3>
+                <button class="modal-close" onclick="closeOrderModal()">&times;</button>
+            </div>
+            <div class="modal-search">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Cari produk..." id="searchProduct" onkeyup="searchProducts()">
+            </div>
+            <div class="modal-info">
+                <i class="fas fa-info-circle"></i>
+                <span>Proses maksimal 1x24 jam • Refund jika >1 hari • No refund jika bukan kesalahan admin</span>
+            </div>
+            <div id="modalProductList" class="modal-product-list">
+                <!-- Daftar produk akan di-load via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <i class="fas fa-dragon"></i>
+                    <span>DRAGON STORE</span>
+                </div>
+                <p>Toko produk digital sejak 2025. Menyediakan Aplikasi Premium (YouTube, Alight Motion, Viu) dan Aplikasi Bug (DarkKnife) dengan harga termurah.</p>
+                <p class="policy"><i class="fas fa-clock"></i> Proses maksimal 1x24 jam • Refund jika >1 hari • No refund jika bukan kesalahan admin</p>
+            </div>
+            <div class="footer-section">
+                <h4>Menu</h4>
+                <a href="#" onclick="showPage('home')">Beranda</a>
+                <a href="#" onclick="showPage('products')">Produk</a>
+                <a href="#" onclick="showPage('payment')">Pembayaran</a>
+                <a href="#" onclick="showPage('order-tutorial')">Cara Order</a>
+                <a href="#" onclick="showPage('terms')">Syarat & Ketentuan</a>
+                <a href="#" onclick="showPage('privacy')">Kebijakan Privasi</a>
+            </div>
+            <div class="footer-section">
+                <h4>Kontak</h4>
+                <p><i class="fab fa-whatsapp"></i> +62 896-7579-7762</p>
+                <p><i class="fas fa-envelope"></i> dragonstore2026@gmail.com</p>
+                <p><i class="fas fa-clock"></i> Online 24/7</p>
+            </div>
+            <div class="footer-section">
+                <h4>Kebijakan</h4>
+                <p><i class="fas fa-check-circle" style="color: #00ff9d;"></i> Proses Max 1x24 Jam</p>
+                <p><i class="fas fa-check-circle" style="color: #00ff9d;"></i> Refund 100% jika >1 hari</p>
+                <p><i class="fas fa-times-circle" style="color: #ff4d4d;"></i> No Refund (bukan kesalahan admin)</p>
+                <p><i class="fas fa-shield-alt"></i> Data 100% Aman</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Dragon Store - Toko Produk Digital. <strong>Membeli berarti paham konsekuensi.</strong></p>
+        </div>
+    </footer>
+
+    <script>
+// Data Produk Digital - ONLY 2 CATEGORIES
+const products = [
+    // APLIKASI PREMIUM
+    {
+        id: 1,
+        name: "YouTube Invite Famplan 1 Bulan",
+        price: 5000,
+        description: "Akun YouTube Pro, no ads, YouTube Music, background play, bisa login di HP & PC.",
+        image: "images/youtube.jpg",
+        category: "Aplikasi Premium",
+        process: "Max 1x24 jam"
+    },
+    {
+        id: 2,
+        name: "Alight Motion Pro 1 Tahun",
+        price: 2000,
+        description: "Aplikasi editing video Alight Motion Pro, full fitur, no watermark, 1 Tahun",
+        image: "images/alightmotion.jpg",
+        category: "Aplikasi Premium",
+        process: "Max 1x24 jam"
+    },
+    {
+        id: 3,
+        name: "Viu Pro lifetime",
+        price: 2000,
+        description: "Akun Viu Premium, nonton semua konten eksklusif, bebas iklan, kualitas HD",
+        image: "images/viu.jpg",
+        category: "Aplikasi Premium",
+        process: "Max 1x24 jam"
+    },
+    
+    // APLIKASI BUG
+    {
+        id: 4,
+        name: "DarkKnife 1 Hari",
+        price: 5000,
+        description: "DarkKnife - Tools khusus.",
+        image: "images/darkknife.jpg",
+        category: "Aplikasi Bug",
+        process: "Max 1x24 jam"
+    },
+    {
+        id: 5,
+        name: "DarkKnife 1 Minggu",
+        price: 10000,
+        description: "DarkKnife - Tools khusus.",
+        image: "images/darkknife.jpg",
+        category: "Aplikasi Bug",
+        process: "Max 1x24 jam"
+    },
+    {
+        id: 6,
+        name: "DarkKnife 1 Bulan",
+        price: 20000,
+        description: "DarkKnife - Tools khusus.",
+        image: "images/darkknife.jpg",
+        category: "Aplikasi Bug",
+        process: "Max 1x24 jam"
+    }, 
+    {
+        id: 7,
+        name: "DarkKnife 1 Tahun",
+        price: 30000,
+        description: "DarkKnife - Tools khusus.",
+        image: "images/darkknife.jpg",
+        category: "Aplikasi Bug",
+        process: "Max 1x24 jam"
+    }
+];
+
+        const whatsappNumber = "6289675797762";
+        const storeEmail = "dragonstore2026@gmail.com";
+
+        // Fungsi navigasi
+        function showPage(pageName) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active-page');
+            });
+            document.getElementById(pageName).classList.add('active-page');
+            
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.getElementById('nav-' + pageName).classList.add('active');
+            
+            // Tutup mobile menu jika terbuka
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.remove('show');
+        }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('show');
+        }
+
+        // Tutup mobile menu saat klik di luar
+        document.addEventListener('click', function(event) {
+            const navMenu = document.getElementById('navMenu');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            
+            if (navMenu && toggle && !navMenu.contains(event.target) && !toggle.contains(event.target)) {
+                navMenu.classList.remove('show');
+            }
+        });
+
+        // Modal functions
+        function openOrderModal() {
+            const modal = document.getElementById('orderModal');
+            const modalList = document.getElementById('modalProductList');
+            
+            modalList.innerHTML = '';
+            
+            products.forEach(product => {
+                const productItem = document.createElement('div');
+                productItem.className = 'modal-product-item';
+                productItem.onclick = () => orderProduct(product);
+                
+                productItem.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/50x50?text=Digital'">
+                    <div class="modal-product-info">
+                        <span class="modal-product-name">${product.name}</span>
+                        <span class="modal-product-price">Rp ${product.price.toLocaleString()}</span>
+                        <span class="modal-product-category">${product.category}</span>
+                        <span class="modal-product-process"><i class="fas fa-clock"></i> ${product.process}</span>
+                    </div>
+                `;
+                
+                modalList.appendChild(productItem);
+            });
+            
+            modal.style.display = 'flex';
+        }
+
+        function closeOrderModal() {
+            document.getElementById('orderModal').style.display = 'none';
+        }
+
+        // Search products in modal
+        function searchProducts() {
+            const searchText = document.getElementById('searchProduct').value.toLowerCase();
+            const modalList = document.getElementById('modalProductList');
+            const filteredProducts = products.filter(product => 
+                product.name.toLowerCase().includes(searchText) ||
+                product.category.toLowerCase().includes(searchText) ||
+                product.description.toLowerCase().includes(searchText)
+            );
+            
+            modalList.innerHTML = '';
+            
+            filteredProducts.forEach(product => {
+                const productItem = document.createElement('div');
+                productItem.className = 'modal-product-item';
+                productItem.onclick = () => orderProduct(product);
+                
+                productItem.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/50x50?text=Digital'">
+                    <div class="modal-product-info">
+                        <span class="modal-product-name">${product.name}</span>
+                        <span class="modal-product-price">Rp ${product.price.toLocaleString()}</span>
+                        <span class="modal-product-category">${product.category}</span>
+                        <span class="modal-product-process"><i class="fas fa-clock"></i> ${product.process}</span>
+                    </div>
+                `;
+                
+                modalList.appendChild(productItem);
+            });
+        }
+
+        // Order via WhatsApp
+        function orderProduct(product) {
+            const message = `Halo Dragon Store, saya ingin memesan produk digital:
+*Produk:* ${product.name}
+*Kategori:* ${product.category}
+*Harga:* Rp ${product.price.toLocaleString()}
+
+Saya sudah membaca dan menyetujui kebijakan
+Mohon info stok dan cara pembayaran. Terima kasih.`;
+            
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+            closeOrderModal();
+        }
+
+        // Load products page
+        function loadProductsPage() {
+            const container = document.getElementById('product-detail-container');
+            container.innerHTML = '';
+            
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-badge">${product.category}</div>
+                    <img src="${product.image}" alt="${product.name}" class="product-img" onerror="this.src='https://via.placeholder.com/250x200?text=Digital+Product'">
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        <div class="product-price">Rp ${product.price.toLocaleString()}</div>
+                        <p class="product-desc">${product.description}</p>
+                        <div class="product-meta">
+                            <span class="product-meta-item"><i class="fas fa-clock"></i> ${product.process}</span>
+                        </div>
+                        <div class="product-actions">
+                            <button onclick="event.stopPropagation(); quickView(${product.id})" class="btn-secondary">
+                                <i class="fas fa-eye"></i> Detail
+                            </button>
+                            <button onclick="event.stopPropagation(); orderProduct(${JSON.stringify(product).replace(/"/g, '&quot;')})" class="btn-primary">
+                                <i class="fab fa-whatsapp"></i> Pesan
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(productCard);
+            });
+        }
+
+        // Load popular products
+        function loadPopularProducts() {
+            const container = document.getElementById('popular-products');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            const popularProducts = products.slice(0, 4);
+            
+            popularProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'popular-card';
+                productCard.onclick = () => orderProduct(product);
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/150x150?text=Digital'">
+                    <h4>${product.name}</h4>
+                    <div class="popular-price">Rp ${product.price.toLocaleString()}</div>
+                    <div class="popular-process"><i class="fas fa-clock"></i> ${product.process}</div>
+                    <button class="btn-order-mini"><i class="fab fa-whatsapp"></i> Pesan</button>
+                `;
+                container.appendChild(productCard);
+            });
+        }
+
+        // Quick view function
+        function quickView(productId) {
+            const product = products.find(p => p.id === productId);
+            alert(`📦 DETAIL PRODUK:\n\nNama: ${product.name}\nKategori: ${product.category}\nHarga: Rp ${product.price.toLocaleString()}\nDeskripsi: ${product.description}\nProses: ${product.process}\n\n📋 KEBIJAKAN:\n• Proses maksimal 1x24 jam\n• Refund 100% jika >1 hari (kesalahan admin)\n• NO REFUND jika bukan kesalahan admin\n• Membeli berarti paham konsekuensi`);
+        }
+
+        // Filter products
+        function filterProducts(category) {
+            const container = document.getElementById('product-detail-container');
+            container.innerHTML = '';
+            
+            const filteredProducts = category === 'all' 
+                ? products 
+                : products.filter(p => p.category === category);
+            
+            filteredProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-badge">${product.category}</div>
+                    <img src="${product.image}" alt="${product.name}" class="product-img" onerror="this.src='https://via.placeholder.com/250x200?text=Digital+Product'">
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        <div class="product-price">Rp ${product.price.toLocaleString()}</div>
+                        <p class="product-desc">${product.description}</p>
+                        <div class="product-meta">
+                            <span class="product-meta-item"><i class="fas fa-clock"></i> ${product.process}</span>
+                        </div>
+                        <div class="product-actions">
+                            <button onclick="event.stopPropagation(); quickView(${product.id})" class="btn-secondary">
+                                <i class="fas fa-eye"></i> Detail
+                            </button>
+                            <button onclick="event.stopPropagation(); orderProduct(${JSON.stringify(product).replace(/"/g, '&quot;')})" class="btn-primary">
+                                <i class="fab fa-whatsapp"></i> Pesan
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(productCard);
+            });
+
+            // Update active filter
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('orderModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProductsPage();
+            loadPopularProducts();
+        });
+    </script>
+</body>
+</html>
