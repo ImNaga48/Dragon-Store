@@ -180,6 +180,9 @@
       ×
     </button>
 
+
+    <!-- HEADER -->
+
     <div class="qris-history-heading">
 
       <span>
@@ -197,6 +200,8 @@
     </div>
 
 
+    <!-- QR IMAGE -->
+
     <div class="qris-history-image-wrap">
 
       <img
@@ -208,17 +213,22 @@
     </div>
 
 
+    <!-- PAYMENT INFO -->
+
     <div class="qris-history-info">
 
       <div>
         <span>Total Pembayaran</span>
+
         <strong id="qrisHistoryAmount">
           Rp0
         </strong>
       </div>
 
+
       <div>
         <span>Total Koin</span>
+
         <strong id="qrisHistoryCoins">
           0 Koin
         </strong>
@@ -227,12 +237,30 @@
     </div>
 
 
+    <!-- COUNTDOWN -->
+
     <div
       id="qrisHistoryCountdown"
       class="qris-history-countdown"
     >
       Menunggu...
     </div>
+
+
+    <!-- CHECK STATUS BUTTON -->
+
+<button
+  class="refresh-status-btn"
+  id="refreshQrisStatus"
+  type="button"
+>
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M20 11a8 8 0 0 0-14.9-4M4 5v4h4"></path>
+    <path d="M4 13a8 8 0 0 0 14.9 4M20 19v-4h-4"></path>
+  </svg>
+
+  <span id="refreshQrisStatusText">Cek Status Pembayaran</span>
+</button>
 
   </div>
 
