@@ -6,7 +6,7 @@ import { supabase } from "./supabase.js";
 ========================= */
 
 const BACKEND_URL =
-  "https://dragon-store-api.gunawanstanlie.workers.dev/";
+  "https://dragon-store-api.gunawanstanlie.workers.dev";
 
 
 /* =========================
