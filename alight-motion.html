@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Alight Motion Prem - Dragon Store</title>
+
+  <link
+    rel="stylesheet"
+    href="../css/am.css"
+  >
+</head>
+
+<body>
+
+<!-- =========================
+     NAVBAR
+========================== -->
+
+<header class="navbar">
+
+  <div class="brand">
+
+    <img
+      src="../assets/logo.jpg"
+      alt="Dragon Store"
+      class="brand-logo"
+    >
+
+    <div>
+
+      <div class="brand-name">
+        Dragon Store
+      </div>
+
+      <div class="brand-subtitle">
+        Premium digital services
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="nav-actions">
+
+    <!-- COIN BALANCE -->
+
+    <button
+      class="coin-pill"
+      id="openTopup"
+      type="button"
+    >
+
+      <svg
+        class="icon coin-icon"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+
+        <circle
+          cx="12"
+          cy="12"
+          r="8"
+        ></circle>
+
+        <path
+          d="M9.5 9.5c.4-1 1.4-1.5 2.6-1.5
+             1.4 0 2.4.7 2.4 1.8
+             0 1.2-1.1 1.7-2.5 1.9
+             -1.3.2-2.5.7-2.5 1.9
+             0 1.1 1 1.9 2.5 1.9
+             1.2 0 2.2-.5 2.6-1.5"
+        ></path>
+
+        <path
+          d="M12 6.8v10.4"
+        ></path>
+
+      </svg>
+
+
+      <span id="coinBalance">
+        0
+      </span>
+
+
+      <span class="coin-label">
+        Koin
+      </span>
+
+
+      <span class="plus">
+        +
+      </span>
+
+    </button>
+
+
+    <!-- KEMBALI KE BERANDA -->
+
+    <a
+      href="../index.html"
+      class="history-nav-btn"
+    >
+      ← Beranda
+    </a>
+
+  </div>
+
+</header>
+
+
+<!-- =========================
+     MAIN
+========================== -->
+
+<main class="am-page">
+
+
+  <!-- =========================
+       PRODUCT HEADER
+  ========================== -->
+
+  <section class="am-hero">
+
+    <div class="am-product-icon">
+
+      <img
+        src="../assets/am.jpg"
+        alt="Alight Motion"
+      >
+
+    </div>
+
+
+    <span class="eyebrow">
+      PREMIUM
+    </span>
+
+
+    <h1>
+      Alight Motion Prem
+    </h1>
+
+
+    <p>
+      Aktifkan akses premium pada
+      akun Alight Motion pribadi kamu.
+    </p>
+
+
+    <div class="am-product-info">
+
+      <div>
+
+        <span>
+          Jenis Akun
+        </span>
+
+        <strong>
+          Pribadi
+        </strong>
+
+      </div>
+
+
+      <div>
+
+        <span>
+          Harga
+        </span>
+
+        <strong>
+          1 Koin
+        </strong>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       PURCHASE FLOW
+  ========================== -->
+
+  <section class="am-card">
+
+
+    <!-- STEP INDICATOR -->
+
+    <div class="am-steps">
+
+      <div
+        class="am-step active"
+        id="indicatorEmail"
+      >
+
+        <span>
+          01
+        </span>
+
+        <small>
+          Email
+        </small>
+
+      </div>
+
+
+      <div
+        class="am-step"
+        id="indicatorLink"
+      >
+
+        <span>
+          02
+        </span>
+
+        <small>
+          Link
+        </small>
+
+      </div>
+
+
+      <div
+        class="am-step"
+        id="indicatorVerify"
+      >
+
+        <span>
+          03
+        </span>
+
+        <small>
+          Verifikasi
+        </small>
+
+      </div>
+
+
+      <div
+        class="am-step"
+        id="indicatorPurchase"
+      >
+
+        <span>
+          04
+        </span>
+
+        <small>
+          Pembelian
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         ERROR
+    ========================== -->
+
+    <div
+      class="am-error"
+      id="errorBox"
+    >
+
+      <strong>
+        Terjadi kesalahan
+      </strong>
+
+      <p id="errorText">
+        Silakan coba kembali.
+      </p>
+
+    </div>
+
+
+    <!-- =========================
+         STEP 1
+    ========================== -->
+
+    <div
+      class="am-panel active"
+      id="stepEmail"
+    >
+
+      <span class="am-panel-label">
+        LANGKAH 01
+      </span>
+
+
+      <h2>
+        Masukkan Email
+      </h2>
+
+
+      <p>
+        Masukkan email yang terhubung
+        dengan akun Alight Motion pribadi
+        kamu.
+      </p>
+
+
+      <label
+        for="email"
+        class="am-label"
+      >
+        Email Alight Motion
+      </label>
+
+
+      <input
+        type="email"
+        id="email"
+        class="am-input"
+        placeholder="nama@email.com"
+        autocomplete="email"
+      >
+
+
+      <button
+        type="button"
+        id="sendBtn"
+        class="am-button"
+      >
+        Kirim Magic Link
+      </button>
+
+
+      <div class="am-help">
+
+        <strong>
+          Pastikan email benar
+        </strong>
+
+        <span>
+          Gunakan email yang benar-benar
+          terhubung dengan akun Alight Motion
+          kamu.
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         STEP 2
+    ========================== -->
+
+    <div
+      class="am-panel"
+      id="stepLink"
+    >
+
+      <span class="am-panel-label">
+        LANGKAH 02
+      </span>
+
+
+      <h2>
+        Masukkan Magic Link
+      </h2>
+
+
+      <p>
+        Cek email kamu dan cari notifikasi
+        dari <strong>Alight</strong>.
+      </p>
+
+
+      <div class="am-mail-guide">
+
+        <div class="am-mail-icon">
+          @
+        </div>
+
+
+        <div>
+
+          <strong>
+            Tidak menemukan email?
+          </strong>
+
+          <span>
+            Periksa folder Spam atau Junk
+            pada email kamu.
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <label
+        for="magicLink"
+        class="am-label"
+      >
+        Magic Link
+      </label>
+
+
+      <textarea
+        id="magicLink"
+        class="am-input am-textarea"
+        placeholder="Tempel magic link di sini..."
+        rows="4"
+      ></textarea>
+
+
+      <button
+        type="button"
+        id="verifyBtn"
+        class="am-button"
+      >
+        Verifikasi Link
+      </button>
+
+
+      <button
+        type="button"
+        id="backEmailBtn"
+        class="am-secondary-button"
+      >
+        Kembali
+      </button>
+
+    </div>
+
+
+    <!-- =========================
+         STEP 3
+    ========================== -->
+
+    <div
+      class="am-panel"
+      id="stepVerify"
+    >
+
+      <span class="am-panel-label">
+        LANGKAH 03
+      </span>
+
+
+      <h2>
+        Verifikasi Berhasil
+      </h2>
+
+
+      <p>
+        Akun Alight Motion berhasil
+        diverifikasi dan siap diproses.
+      </p>
+
+
+      <div class="am-verified">
+
+        <div class="am-verified-icon">
+          ✓
+        </div>
+
+
+        <div>
+
+          <strong>
+            Akun Terverifikasi
+          </strong>
+
+          <span id="verifiedEmail">
+            -
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="am-purchase-box">
+
+        <div>
+
+          <span>
+            Produk
+          </span>
+
+          <strong>
+            Alight Motion Prem
+          </strong>
+
+        </div>
+
+
+        <div>
+
+          <span>
+            Harga
+          </span>
+
+          <strong>
+            1 Koin
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <button
+        type="button"
+        id="purchaseBtn"
+        class="am-button"
+      >
+        Dragon Magic
+      </button>
+
+
+      <p class="am-small-note">
+        Dengan melanjutkan, 1 koin akan
+        digunakan untuk proses aktivasi
+        premium.
+      </p>
+
+    </div>
+
+
+    <!-- =========================
+         STEP 4
+    ========================== -->
+
+    <div
+      class="am-panel"
+      id="stepPurchase"
+    >
+
+      <span class="am-panel-label">
+        LANGKAH 04
+      </span>
+
+
+      <div class="am-success-icon">
+        ✓
+      </div>
+
+
+      <h2>
+        Premium Berhasil Diaktifkan
+      </h2>
+
+
+      <p>
+        Proses aktivasi Alight Motion Prem
+        telah berhasil.
+      </p>
+
+
+      <div class="am-success-box">
+
+        <span>
+          Alight Motion
+        </span>
+
+        <strong>
+          Premium Aktif
+        </strong>
+
+      </div>
+
+
+      <a
+        href="../index.html"
+        class="am-button am-home-button"
+      >
+        Kembali ke Dragon Store
+      </a>
+
+    </div>
+
+
+    <!-- =========================
+         LOADING
+    ========================== -->
+
+    <div
+      class="am-loading"
+      id="stepLoading"
+    >
+
+      <div class="am-spinner"></div>
+
+
+      <h2 id="loadingTitle">
+        Memproses...
+      </h2>
+
+
+      <p id="loadingText">
+        Mohon tunggu sebentar.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       INFORMATION
+  ========================== -->
+
+  <section class="am-information">
+
+
+    <div class="am-info-card">
+
+      <span class="am-info-number">
+        01
+      </span>
+
+      <div>
+
+        <h3>
+          Akun Pribadi
+        </h3>
+
+        <p>
+          Alight Motion Prem menggunakan
+          akun Alight Motion pribadi milik
+          buyer.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="am-info-card">
+
+      <span class="am-info-number">
+        02
+      </span>
+
+      <div>
+
+        <h3>
+          Cek Email
+        </h3>
+
+        <p>
+          Setelah mengirim email, cek inbox
+          dan folder Spam atau Junk jika
+          notifikasi belum terlihat.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="am-info-card">
+
+      <span class="am-info-number">
+        03
+      </span>
+
+      <div>
+
+        <h3>
+          Jangan Bagikan Link
+        </h3>
+
+        <p>
+          Link yang diterima digunakan untuk
+          proses verifikasi akun pada Dragon
+          Store.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================== -->
+
+<footer class="am-footer">
+
+  <p>
+    © 2026 Dragon Store. All rights reserved.
+  </p>
+
+</footer>
+
+
+<!-- =========================
+     JAVASCRIPT
+========================== -->
+
+<script
+  type="module"
+  src="../java script/am.js"
+></script>
+
+</body>
+</html>
