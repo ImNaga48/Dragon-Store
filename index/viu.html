@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Viu Premium - Dragon Store</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/viu.css"
+    >
+</head>
+
+<body class="viu-page">
+
+<!-- =========================
+     NAVBAR
+========================== -->
+<header class="navbar">
+
+  <div class="brand">
+    <img
+      src="../assets/logo.jpg"
+      alt="Dragon Store"
+      class="brand-logo"
+    >
+
+    <div>
+      <div class="brand-name">
+        Dragon Store
+      </div>
+
+      <div class="brand-subtitle">
+        Premium digital services
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-actions">
+
+    <!-- COIN BALANCE -->
+    <button
+      class="coin-pill"
+      id="openTopup"
+      type="button"
+    >
+      <svg
+        class="icon coin-icon"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <circle
+          cx="12"
+          cy="12"
+          r="8"
+        ></circle>
+
+        <path
+          d="M9.5 9.5c.4-1 1.4-1.5 2.6-1.5
+             1.4 0 2.4.7 2.4 1.8
+             0 1.2-1.1 1.7-2.5 1.9
+             -1.3.2-2.5.7-2.5 1.9
+             0 1.1 1 1.9 2.5 1.9
+             1.2 0 2.2-.5 2.6-1.5"
+        ></path>
+
+        <path
+          d="M12 6.8v10.4"
+        ></path>
+      </svg>
+
+      <span id="coinBalance">
+        0
+      </span>
+
+      <span class="coin-label">
+        Koin
+      </span>
+
+      <span class="plus">
+        +
+      </span>
+    </button>
+
+
+    <!-- KEMBALI KE BERANDA -->
+    <a
+      href="../index.html"
+      class="history-nav-btn"
+    >
+      ← Beranda
+    </a>
+
+  </div>
+
+</header>
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+    <main class="viu-container">
+
+        <!-- HERO -->
+        <section class="viu-hero">
+
+            <div class="viu-logo-wrap">
+                <img
+                    src="../assets/viu.jpg"
+                    alt="Viu"
+                    class="viu-app-logo"
+                >
+            </div>
+
+            <div class="viu-hero-content">
+
+                <span class="viu-label">
+                    PREMIUM ACCOUNT
+                </span>
+
+                <h1>Viu Premium</h1>
+
+                <p>
+                    Dapatkan akun Viu Premium pribadi
+                    dengan akses Lifetime.
+                </p>
+
+            </div>
+
+            <div class="viu-hero-balance">
+                <span>Koin kamu</span>
+                <strong id="heroCoinBalance">
+                    Memuat...
+                </strong>
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             PRODUCT
+        ========================== -->
+        <section class="viu-product-section">
+
+            <div class="viu-section-heading">
+                <div>
+                    <span class="viu-section-label">
+                        PRODUK
+                    </span>
+
+                    <h2>Viu Premium</h2>
+
+                    <p>
+                        Akun pribadi untuk satu pembeli.
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="viu-product-card">
+
+                <div class="viu-product-top">
+
+                    <div class="viu-product-icon">
+                        <img
+                            src="../assets/viu.jpg"
+                            alt="Viu"
+                        >
+                    </div>
+
+                    <div class="viu-product-title">
+                        <h3>Viu Premium</h3>
+                        <span>Personal Account</span>
+                    </div>
+
+                </div>
+
+
+                <div class="viu-product-info">
+
+                    <div class="viu-info-item">
+                        <span>Durasi</span>
+                        <strong>Lifetime</strong>
+                    </div>
+
+                    <div class="viu-info-item">
+                        <span>Harga</span>
+                        <strong>3 Koin</strong>
+                    </div>
+
+                    <div class="viu-info-item">
+                        <span>Stock</span>
+                        <strong id="viuStock">Memuat...</strong>
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="viuBuyBtn"
+                    class="viu-buy-btn"
+                    disabled
+                >
+                    Memuat...
+                </button>
+
+                <p class="viu-product-note">
+                    Setelah pembelian berhasil, akun akan
+                    tersimpan di Riwayat Akun kamu.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             RIWAYAT AKUN
+        ========================== -->
+        <section class="viu-history-section">
+
+            <div class="viu-section-heading">
+
+                <div>
+                    <span class="viu-section-label">
+                        AKUN SAYA
+                    </span>
+
+                    <h2>Riwayat Akun</h2>
+
+                    <p>
+                        Akun Viu yang pernah kamu beli.
+                    </p>
+                </div>
+
+                <span
+                    id="viuHistoryCount"
+                    class="viu-history-count"
+                >
+                    0
+                </span>
+
+            </div>
+
+
+            <div
+                id="viuHistory"
+                class="viu-history"
+            >
+
+                <div class="viu-empty-state">
+                    <div class="viu-empty-icon">
+                        V
+                    </div>
+
+                    <h3>Belum ada akun</h3>
+
+                    <p>
+                        Akun Viu yang kamu beli akan
+                        muncul di sini.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         PURCHASE MODAL
+    ========================== -->
+    <div
+        id="viuPurchaseModal"
+        class="viu-modal"
+        aria-hidden="true"
+    >
+
+        <div
+            class="viu-modal-box"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="viuModalTitle"
+        >
+
+            <button
+                type="button"
+                id="viuModalClose"
+                class="viu-modal-close"
+                aria-label="Tutup"
+            >
+                ×
+            </button>
+
+            <div class="viu-modal-icon">
+                V
+            </div>
+
+            <h3 id="viuModalTitle">
+                Konfirmasi Pembelian
+            </h3>
+
+            <p id="viuModalText">
+                Kamu akan membeli Viu Premium
+                dengan harga 3 Koin.
+            </p>
+
+            <div class="viu-modal-summary">
+
+                <div>
+                    <span>Produk</span>
+                    <strong>Viu Premium</strong>
+                </div>
+
+                <div>
+                    <span>Durasi</span>
+                    <strong>Lifetime</strong>
+                </div>
+
+                <div>
+                    <span>Harga</span>
+                    <strong>3 Koin</strong>
+                </div>
+
+            </div>
+
+            <div class="viu-modal-actions">
+
+                <button
+                    type="button"
+                    id="viuCancelBtn"
+                    class="viu-cancel-btn"
+                >
+                    Batal
+                </button>
+
+                <button
+                    type="button"
+                    id="viuConfirmBtn"
+                    class="viu-confirm-btn"
+                >
+                    Beli Sekarang
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         ACCOUNT MODAL
+    ========================== -->
+    <div
+        id="viuAccountModal"
+        class="viu-modal"
+        aria-hidden="true"
+    >
+
+        <div
+            class="viu-modal-box viu-account-modal-box"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="viuAccountTitle"
+        >
+
+            <button
+                type="button"
+                id="viuAccountClose"
+                class="viu-modal-close"
+                aria-label="Tutup"
+            >
+                ×
+            </button>
+
+            <div class="viu-modal-icon">
+                V
+            </div>
+
+            <h3 id="viuAccountTitle">
+                Akun Viu
+            </h3>
+
+            <p class="viu-account-subtitle">
+                Simpan informasi akun ini dengan aman.
+            </p>
+
+
+            <div class="viu-credential-list">
+
+                <div class="viu-credential-item">
+
+                    <span>Email / NoTel</span>
+
+                    <div class="viu-credential-value">
+
+                        <strong id="viuAccountLogin">
+                            -
+                        </strong>
+
+                        <button
+                            type="button"
+                            class="viu-copy-btn"
+                            data-copy-target="viuAccountLogin"
+                        >
+                            Salin
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="viu-credential-item">
+
+                    <span>Password</span>
+
+                    <div class="viu-credential-value">
+
+                        <strong
+                            id="viuAccountPassword"
+                            class="viu-password-hidden"
+                        >
+                            ••••••••••
+                        </strong>
+
+                        <div class="viu-password-actions">
+
+                            <button
+                                type="button"
+                                id="viuPasswordToggle"
+                                class="viu-copy-btn"
+                            >
+                                Lihat
+                            </button>
+
+                            <button
+                                type="button"
+                                class="viu-copy-btn"
+                                data-copy-target="viuAccountPassword"
+                            >
+                                Salin
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="viu-credential-item">
+
+                    <span>Tanggal Pemesanan</span>
+
+                    <strong id="viuAccountDate">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="viu-credential-item">
+
+                    <span>ID Pemesanan</span>
+
+                    <div class="viu-credential-value">
+
+                        <strong id="viuAccountOrderId">
+                            -
+                        </strong>
+
+                        <button
+                            type="button"
+                            class="viu-copy-btn"
+                            data-copy-target="viuAccountOrderId"
+                        >
+                            Salin
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         TOAST
+    ========================== -->
+    <div
+        id="viuToast"
+        class="viu-toast"
+        aria-live="polite"
+    ></div>
+
+
+    <script
+        type="module"
+        src="../java script/viu.js"
+    ></script>
+
+</body>
+</html>

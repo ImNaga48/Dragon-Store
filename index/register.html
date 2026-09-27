@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Buat Akun - Dragon Store</title>
+
+  <link rel="stylesheet" href=" ../css/register.css">
+</head>
+
+<body class="auth-body">
+
+  <main class="auth-page">
+
+    <!-- BRAND -->
+    <a href="../index.html" class="auth-brand">
+      <img
+        src="../assets/logo.jpg"
+        alt="Dragon Store"
+      >
+
+      <span>Dragon Store</span>
+    </a>
+
+
+<section class="auth-card">
+
+  <!-- BACK BUTTON -->
+  <a
+    href="../index.html"
+    class="auth-back"
+    aria-label="Kembali ke Beranda"
+    title="Kembali ke Beranda"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path d="M15 18l-6-6 6-6"></path>
+    </svg>
+  </a>
+
+
+  <!-- HEADING -->
+  <div class="auth-heading">
+
+    <span>DRAGON STORE</span>
+
+    <h1>Buat Akun</h1>
+
+    <p>
+      Buat akun untuk menyimpan saldo koin
+      dan pesananmu.
+    </p>
+
+  </div>
+
+
+  <!-- FORM -->
+  <form id="registerForm">
+
+    <label for="registerEmail">
+      Email
+    </label>
+
+    <input
+      type="email"
+      id="registerEmail"
+      name="email"
+      placeholder="nama@email.com"
+      autocomplete="email"
+      required
+    >
+
+
+    <label for="registerPassword">
+      Password
+    </label>
+
+    <input
+      type="password"
+      id="registerPassword"
+      name="password"
+      placeholder="Minimal 6 karakter"
+      autocomplete="new-password"
+      minlength="6"
+      required
+    >
+
+
+    <label for="registerPasswordConfirm">
+      Konfirmasi Password
+    </label>
+
+    <input
+      type="password"
+      id="registerPasswordConfirm"
+      name="password_confirmation"
+      placeholder="Ulangi password"
+      autocomplete="new-password"
+      minlength="6"
+      required
+    >
+
+
+    <button
+      type="submit"
+      class="auth-submit"
+    >
+      Buat Akun
+    </button>
+
+  </form>
+
+
+  <!-- MESSAGE -->
+  <p
+    id="authMessage"
+    class="auth-message"
+  ></p>
+
+
+  <!-- LOGIN LINK -->
+  <div class="auth-switch">
+
+    <span>Sudah punya akun?</span>
+
+    <a href="login.html">
+      Login
+    </a>
+
+  </div>
+
+</section>
+
+
+  <!-- SUPABASE / AUTH SCRIPT -->
+  <script
+    type="module"
+    src="../java script/auth.js"
+  ></script>
+
+</body>
+</html>

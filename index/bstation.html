@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Bstation Premium - Dragon Store
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="../css/bstation.css"
+    >
+
+</head>
+
+
+<body class="bstation-page">
+
+
+<!-- =========================
+     NAVBAR
+========================== -->
+<header class="navbar">
+
+  <div class="brand">
+    <img
+      src="../assets/logo.jpg"
+      alt="Dragon Store"
+      class="brand-logo"
+    >
+
+    <div>
+      <div class="brand-name">
+        Dragon Store
+      </div>
+
+      <div class="brand-subtitle">
+        Premium digital services
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-actions">
+
+    <!-- COIN BALANCE -->
+    <button
+      class="coin-pill"
+      id="openTopup"
+      type="button"
+    >
+      <svg
+        class="icon coin-icon"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <circle
+          cx="12"
+          cy="12"
+          r="8"
+        ></circle>
+
+        <path
+          d="M9.5 9.5c.4-1 1.4-1.5 2.6-1.5
+             1.4 0 2.4.7 2.4 1.8
+             0 1.2-1.1 1.7-2.5 1.9
+             -1.3.2-2.5.7-2.5 1.9
+             0 1.1 1 1.9 2.5 1.9
+             1.2 0 2.2-.5 2.6-1.5"
+        ></path>
+
+        <path
+          d="M12 6.8v10.4"
+        ></path>
+      </svg>
+
+      <span id="coinBalance">
+        0
+      </span>
+
+      <span class="coin-label">
+        Koin
+      </span>
+
+      <span class="plus">
+        +
+      </span>
+    </button>
+
+
+    <!-- KEMBALI KE BERANDA -->
+    <a
+      href="../index.html"
+      class="history-nav-btn"
+    >
+      ← Beranda
+    </a>
+
+  </div>
+
+</header>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="bstation-container">
+
+
+        <!-- =================================================
+             HERO
+        ================================================== -->
+
+        <section class="bstation-hero">
+
+            <img
+                src="../assets/bstation.jpg"
+                alt="Bstation"
+                class="bstation-app-logo"
+            >
+
+
+            <h1>
+                Bstation Premium
+            </h1>
+
+
+            <p>
+                Pilih akun Bstation yang tersedia.
+                Setelah pembelian berhasil, akses akun
+                akan tersimpan di akun Dragon Store kamu.
+            </p>
+
+
+            <!-- =================================================
+                 INFO SALDO
+            ================================================== -->
+
+            <div class="bstation-hero-balance">
+
+                <span>
+                    Koin kamu
+                </span>
+
+                <strong id="heroCoinBalance">
+                    Memuat...
+                </strong>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             DAFTAR AKUN
+             
+             Semua akun ada di sini.
+             
+             Belum dibeli:
+             Tombol "Beli X Koin"
+             
+             Sudah dibeli:
+             Tombol "Lihat Akun"
+        ================================================== -->
+
+        <section class="bstation-section">
+
+            <div class="bstation-section-header">
+
+                <div>
+
+                    <h2>
+                        Akun Bstation
+                    </h2>
+
+                    <p>
+                        Pilih akun yang ingin kamu gunakan
+                    </p>
+
+                </div>
+
+
+                <span id="productCount">
+                    Memuat...
+                </span>
+
+            </div>
+
+
+            <div
+                id="bstationProducts"
+                class="bstation-products"
+            >
+
+                <div class="bstation-loading">
+                    Memuat akun Bstation...
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         PURCHASE MODAL
+    ====================================================== -->
+
+    <div
+        id="bstationModal"
+        class="bstation-modal"
+        aria-hidden="true"
+    >
+
+        <div
+            class="bstation-modal-box"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="bstationModalTitle"
+        >
+
+            <h3 id="bstationModalTitle">
+                Konfirmasi Pembelian
+            </h3>
+
+
+            <p id="bstationModalText">
+
+                Apakah kamu yakin ingin membeli akun ini?
+
+            </p>
+
+
+            <div class="bstation-modal-actions">
+
+
+                <!-- BATAL -->
+
+                <button
+                    type="button"
+                    id="bstationCancelBtn"
+                    class="bstation-cancel-btn"
+                >
+
+                    Batal
+
+                </button>
+
+
+                <!-- KONFIRMASI -->
+
+                <button
+                    type="button"
+                    id="bstationConfirmBtn"
+                    class="bstation-confirm-btn"
+                >
+
+                    Beli Sekarang
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script
+        type="module"
+        src="../java script/bstation.js"
+    ></script>
+
+
+</body>
+
+</html>

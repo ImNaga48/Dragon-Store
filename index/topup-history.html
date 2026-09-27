@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Riwayat Top Up - Dragon Store</title>
+
+  <link
+    rel="stylesheet"
+    href="../css/history.css"
+  >
+
+</head>
+
+<body>
+
+  <!-- ========================================
+       HEADER
+  ======================================== -->
+
+  <header class="history-header">
+
+    <div class="history-header-inner">
+
+      <a
+        href="../index.html"
+        class="history-brand"
+      >
+
+        <img
+          src="../assets/logo.jpg"
+          alt="Dragon Store"
+          class="history-logo"
+        >
+
+        <div class="history-brand-text">
+
+          <strong>
+            Dragon Store
+          </strong>
+
+          <span>
+            Premium Made Simple
+          </span>
+
+        </div>
+
+      </a>
+
+
+      <a
+        href="../index.html"
+        class="history-home-btn"
+      >
+        Kembali
+      </a>
+
+    </div>
+
+  </header>
+
+
+  <!-- ========================================
+       MAIN
+  ======================================== -->
+
+  <main class="history-page">
+
+    <section class="history-container">
+
+
+
+      <!-- TITLE -->
+
+      <div class="history-heading">
+
+        <span class="history-eyebrow">
+          TRANSAKSI
+        </span>
+
+        <h1>
+          Riwayat Top Up
+        </h1>
+
+        <p>
+          Riwayat pembelian koin yang kamu lakukan.
+        </p>
+
+      </div>
+
+
+      <!-- ========================================
+           HISTORY LIST
+      ======================================== -->
+
+      <div
+        id="topupHistoryList"
+        class="topup-history-list"
+      >
+
+        <div
+          id="historyLoading"
+          class="history-loading"
+        >
+          Memuat riwayat transaksi...
+        </div>
+
+      </div>
+
+
+      <!-- ========================================
+           EMPTY
+      ======================================== -->
+
+      <div
+        id="historyEmpty"
+        class="history-empty"
+        hidden
+      >
+
+        <div class="history-empty-icon">
+          +
+        </div>
+
+        <h2>
+          Belum ada transaksi
+        </h2>
+
+        <p>
+          Riwayat pembelian koin kamu akan muncul di sini.
+        </p>
+
+<a
+  href="../index.html?open_topup=1"
+  class="history-topup-btn"
+>
+  Top Up Koin
+</a>
+
+      </div>
+
+    </section>
+
+  </main>
+
+<!-- ========================================
+     QRIS MODAL
+======================================== -->
+
+<div
+  id="qrisHistoryModal"
+  class="qris-history-modal"
+  hidden
+>
+
+  <div
+    class="qris-history-overlay"
+    id="qrisHistoryOverlay"
+  ></div>
+
+  <div
+    class="qris-history-box"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="qrisHistoryTitle"
+  >
+
+    <button
+      type="button"
+      id="closeQrisHistory"
+      class="qris-history-close"
+      aria-label="Tutup"
+    >
+      ×
+    </button>
+
+    <div class="qris-history-heading">
+
+      <span>
+        PEMBAYARAN
+      </span>
+
+      <h2 id="qrisHistoryTitle">
+        QRIS
+      </h2>
+
+      <p id="qrisHistoryStatus">
+        Silakan selesaikan pembayaran.
+      </p>
+
+    </div>
+
+
+    <div class="qris-history-image-wrap">
+
+      <img
+        id="qrisHistoryImage"
+        src=""
+        alt="QRIS Pembayaran"
+      >
+
+    </div>
+
+
+    <div class="qris-history-info">
+
+      <div>
+        <span>Total Pembayaran</span>
+        <strong id="qrisHistoryAmount">
+          Rp0
+        </strong>
+      </div>
+
+      <div>
+        <span>Total Koin</span>
+        <strong id="qrisHistoryCoins">
+          0 Koin
+        </strong>
+      </div>
+
+    </div>
+
+
+    <div
+      id="qrisHistoryCountdown"
+      class="qris-history-countdown"
+    >
+      Menunggu...
+    </div>
+
+  </div>
+
+</div>
+
+  <!-- ========================================
+       TOAST
+  ======================================== -->
+
+  <div
+    id="toast"
+    class="toast"
+  ></div>
+
+
+  <!-- ========================================
+       SCRIPT
+  ======================================== -->
+
+  <script
+    type="module"
+    src="../java script/topup-history.js"
+  ></script>
+
+</body>
+</html>
