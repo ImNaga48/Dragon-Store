@@ -6,76 +6,69 @@ import { supabase } from "./supabase.js";
 
 
 // ========================================
+// KONSTANTA
+// ========================================
+
+// Harus sama dengan TOPUP_EXPIRE_MINUTES di backend
+const TOPUP_EXPIRE_MINUTES = 61;
+
+
+// ========================================
 // ELEMENT
 // ========================================
 
 const historyList =
-  document.getElementById(
-    "topupHistoryList"
-  );
+  document.getElementById("topupHistoryList");
 
 const historyLoading =
-  document.getElementById(
-    "historyLoading"
-  );
+  document.getElementById("historyLoading");
 
 const historyEmpty =
-  document.getElementById(
-    "historyEmpty"
-  );
+  document.getElementById("historyEmpty");
+
+
 // ========================================
 // QRIS MODAL
 // ========================================
 
 const qrisHistoryModal =
-  document.getElementById(
-    "qrisHistoryModal"
-  );
+  document.getElementById("qrisHistoryModal");
 
 const qrisHistoryOverlay =
-  document.getElementById(
-    "qrisHistoryOverlay"
-  );
+  document.getElementById("qrisHistoryOverlay");
 
 const closeQrisHistory =
-  document.getElementById(
-    "closeQrisHistory"
-  );
+  document.getElementById("closeQrisHistory");
 
 const qrisHistoryImage =
-  document.getElementById(
-    "qrisHistoryImage"
-  );
+  document.getElementById("qrisHistoryImage");
 
 const qrisHistoryAmount =
-  document.getElementById(
-    "qrisHistoryAmount"
-  );
+  document.getElementById("qrisHistoryAmount");
 
 const qrisHistoryCoins =
-  document.getElementById(
-    "qrisHistoryCoins"
-  );
+  document.getElementById("qrisHistoryCoins");
 
 const qrisHistoryStatus =
-  document.getElementById(
-    "qrisHistoryStatus"
-  );
+  document.getElementById("qrisHistoryStatus");
 
 const qrisHistoryCountdown =
-  document.getElementById(
-    "qrisHistoryCountdown"
-  );
+  document.getElementById("qrisHistoryCountdown");
+
+const refreshQrisStatus =
+  document.getElementById("refreshQrisStatus");
+
+const refreshQrisStatusText =
+  document.getElementById("refreshQrisStatusText");
 
 let qrisHistoryTimer =
   null;
 
 let currentQrisTransaction =
   null;
+
 const toast =
-  document.getElementById(
-    "toast"
-  );
+  document.getElementById("toast");
 
 
 // ========================================
@@ -113,22 +106,14 @@ function showToast(message) {
   toast.textContent =
     message;
 
-  toast.classList.add(
-    "show"
-  );
+  toast.classList.add("show");
 
-  clearTimeout(
-    showToast.timer
-  );
+  clearTimeout(showToast.timer);
 
   showToast.timer =
     setTimeout(
       () => {
-
-        toast.classList.remove(
-          "show"
-        );
-
+        toast.classList.remove("show");
       },
       2600
     );
@@ -169,17 +154,13 @@ function formatDate(date) {
   const parsed =
     new Date(date);
 
-
   if (
     Number.isNaN(
       parsed.getTime()
     )
   ) {
-
     return "-";
-
   }
-
 
   return parsed.toLocaleString(
     "id-ID",
@@ -202,37 +183,19 @@ function formatDate(date) {
 function getStatusText(status) {
 
   const normalized =
-    String(
-      status || ""
-    ).toLowerCase();
+    String(status || "").toLowerCase();
 
-
-  if (
-    normalized === "paid"
-  ) {
-
+  if (normalized === "paid") {
     return "Pembayaran Berhasil";
-
   }
 
-
-  if (
-    normalized === "expired"
-  ) {
-
+  if (normalized === "expired") {
     return "Kedaluwarsa";
-
   }
 
-
-  if (
-    normalized === "pending"
-  ) {
-
+  if (normalized === "pending") {
     return "Menunggu Pembayaran";
-
   }
-
 
   return "Tidak Diketahui";
 
@@ -246,39 +209,88 @@ function getStatusText(status) {
 function getStatusClass(status) {
 
   const normalized =
-    String(
-      status || ""
-    ).toLowerCase();
+    String(status || "").toLowerCase();
 
-
-  if (
-    normalized === "paid"
-  ) {
-
+  if (normalized === "paid") {
     return "success";
-
   }
 
-
-  if (
-    normalized === "expired"
-  ) {
-
+  if (normalized === "expired") {
     return "expired";
-
   }
 
-
-  if (
-    normalized === "pending"
-  ) {
-
+  if (normalized === "pending") {
     return "pending";
-
   }
-
 
   return "";
+
+}
+
+
+// ========================================
+// HITUNG EXPIRY TIME (FIX TIMEZONE)
+//
+// Prioritas:
+// 1. created_at + TOPUP_EXPIRE_MINUTES (paling akurat)
+// 2. expired_at dianggap UTC (dipaksa "Z")
+// 3. fallback: now + TOPUP_EXPIRE_MINUTES
+// ========================================
+
+function getExpiryTime(payment) {
+
+  if (!payment) {
+    return null;
+  }
+
+  // ========================================
+  // PRIORITAS 1: created_at
+  // ========================================
+
+  if (payment.created_at) {
+
+    const created =
+      new Date(payment.created_at).getTime();
+
+    if (!Number.isNaN(created)) {
+
+      return (
+        created +
+        TOPUP_EXPIRE_MINUTES * 60 * 1000
+      );
+
+    }
+
+  }
+
+  // ========================================
+  // PRIORITAS 2: expired_at (asumsi UTC)
+  // ========================================
+
+  if (payment.expired_at) {
+
+    const parsed =
+      new Date(
+        String(payment.expired_at)
+          .replace(" ", "T") + "Z"
+      );
+
+    if (!Number.isNaN(parsed.getTime())) {
+
+      return parsed.getTime();
+
+    }
+
+  }
+
+  // ========================================
+  // PRIORITAS 3: fallback
+  // ========================================
+
+  return (
+    Date.now() +
+    TOPUP_EXPIRE_MINUTES * 60 * 1000
+  );
 
 }
 
@@ -287,60 +299,50 @@ function getStatusClass(status) {
 // CEK APAKAH QRIS MASIH AKTIF
 // ========================================
 
-function isQrisStillActive(
-  transaction
-) {
+function isQrisStillActive(transaction) {
 
   if (
-    String(
-      transaction.status || ""
-    ).toLowerCase() !==
-    "pending"
+    String(transaction.status || "")
+      .toLowerCase() !== "pending"
   ) {
-
     return false;
-
   }
 
+  const expiry =
+    getExpiryTime(transaction);
 
-  if (!transaction.created_at) {
-
+  if (!expiry) {
     return false;
-
   }
 
-
-  const createdAt =
-    new Date(
-      transaction.created_at
-    ).getTime();
-
-
-  if (
-    Number.isNaN(
-      createdAt
-    )
-  ) {
-
-    return false;
-
-  }
-
-
-  const age =
-    Date.now() -
-    createdAt;
-
-
-  const expireTime =
-    61 *
-    60 *
-    1000;
-
-
-  return age < expireTime;
+  return Date.now() < expiry;
 
 }
+
+
+// ========================================
+// RESET TOMBOL REFRESH
+// ========================================
+
+function resetRefreshButton() {
+
+  if (refreshQrisStatus) {
+
+    refreshQrisStatus.disabled = false;
+
+    refreshQrisStatus.classList.remove("success");
+
+  }
+
+  if (refreshQrisStatusText) {
+
+    refreshQrisStatusText.textContent =
+      "Cek Status Pembayaran";
+
+  }
+
+}
+
 
 // ========================================
 // OPEN QRIS MODAL
@@ -352,58 +354,39 @@ function openQrisModal(payment) {
     return;
   }
 
-
   currentQrisTransaction =
     payment;
-
 
   const qrImage =
     payment.qris_image ||
     payment.qris_url ||
     "";
 
-
   if (qrisHistoryImage) {
-
-    qrisHistoryImage.src =
-      qrImage;
-
+    qrisHistoryImage.src = qrImage;
   }
-
 
   if (qrisHistoryAmount) {
-
     qrisHistoryAmount.textContent =
-      formatRupiah(
-        payment.total_amount
-      );
-
+      formatRupiah(payment.total_amount);
   }
-
 
   if (qrisHistoryCoins) {
-
     qrisHistoryCoins.textContent =
       `${payment.total_coins} Koin`;
-
   }
-
 
   if (qrisHistoryStatus) {
-
     qrisHistoryStatus.textContent =
       "Silakan selesaikan pembayaran melalui QRIS.";
-
   }
 
+  resetRefreshButton();
 
-  qrisHistoryModal.hidden =
-    false;
+  qrisHistoryModal.hidden = false;
 
-
-  startQrisHistoryCountdown(
-    payment.expired_at
-  );
+  // ✅ Kirim object payment, bukan cuma expired_at
+  startQrisHistoryCountdown(payment);
 
 }
 
@@ -418,82 +401,50 @@ function closeQrisModal() {
     return;
   }
 
-
   if (qrisHistoryTimer) {
 
-    clearInterval(
-      qrisHistoryTimer
-    );
+    clearInterval(qrisHistoryTimer);
 
-    qrisHistoryTimer =
-      null;
+    qrisHistoryTimer = null;
 
   }
 
+  qrisHistoryModal.hidden = true;
 
-  qrisHistoryModal.hidden =
-    true;
-
-
-  currentQrisTransaction =
-    null;
-
+  currentQrisTransaction = null;
 
   if (qrisHistoryImage) {
-
-    qrisHistoryImage.removeAttribute(
-      "src"
-    );
-
+    qrisHistoryImage.removeAttribute("src");
   }
+
+  resetRefreshButton();
 
 }
 
 
 // ========================================
-// QRIS COUNTDOWN
+// QRIS COUNTDOWN (FIXED)
 // ========================================
 
-function startQrisHistoryCountdown(
-  expiredAt
-) {
+function startQrisHistoryCountdown(payment) {
 
   if (!qrisHistoryCountdown) {
     return;
   }
 
-
   if (qrisHistoryTimer) {
-
-    clearInterval(
-      qrisHistoryTimer
-    );
-
+    clearInterval(qrisHistoryTimer);
+    qrisHistoryTimer = null;
   }
 
-
-  if (!expiredAt) {
-
-    qrisHistoryCountdown.textContent =
-      "Batas waktu tidak tersedia.";
-
-    return;
-
-  }
-
+  // ========================================
+  // HITUNG EXPIRY TIME
+  // ========================================
 
   const expiryTime =
-    new Date(
-      String(expiredAt).replace(
-        " ",
-        "T"
-      )
-    ).getTime();
+    getExpiryTime(payment);
 
-
-  if (
-    Number.isNaN(expiryTime)
-  ) {
+  if (!expiryTime) {
 
     qrisHistoryCountdown.textContent =
       "Batas waktu tidak tersedia.";
@@ -502,72 +453,252 @@ function startQrisHistoryCountdown(
 
   }
 
+  // ========================================
+  // UPDATE COUNTDOWN
+  // ========================================
 
   function updateCountdown() {
 
     const remaining =
-      expiryTime -
-      Date.now();
-
+      expiryTime - Date.now();
 
     if (remaining <= 0) {
 
-      clearInterval(
-        qrisHistoryTimer
-      );
+      clearInterval(qrisHistoryTimer);
 
-      qrisHistoryTimer =
-        null;
-
+      qrisHistoryTimer = null;
 
       qrisHistoryCountdown.textContent =
         "QRIS sudah kedaluwarsa.";
 
-
       if (qrisHistoryStatus) {
-
         qrisHistoryStatus.textContent =
           "Pembayaran ini sudah kedaluwarsa.";
-
       }
 
       return;
 
     }
 
-
     const totalSeconds =
-      Math.floor(
-        remaining / 1000
-      );
+      Math.floor(remaining / 1000);
 
+    const hours =
+      Math.floor(totalSeconds / 3600);
 
     const minutes =
-      Math.floor(
-        totalSeconds / 60
-      );
-
+      Math.floor((totalSeconds % 3600) / 60);
 
     const seconds =
       totalSeconds % 60;
 
+    // Format: HH:MM:SS kalau lebih dari 1 jam,
+    // kalau kurang: MM:SS
+    if (hours > 0) {
 
-    qrisHistoryCountdown.textContent =
-      `Berlaku ${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+      qrisHistoryCountdown.textContent =
+        `Berlaku ${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+
+    } else {
+
+      qrisHistoryCountdown.textContent =
+        `Berlaku ${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+
+    }
 
   }
 
-
   updateCountdown();
 
-
   qrisHistoryTimer =
-    setInterval(
-      updateCountdown,
-      1000
-    );
+    setInterval(updateCountdown, 1000);
 
 }
+
+
+// ========================================
+// REFRESH QRIS STATUS (MANUAL)
+// ========================================
+
+async function refreshQrisHistoryStatus() {
+
+  if (!currentQrisTransaction) {
+
+    showToast("Data transaksi tidak ditemukan.");
+
+    return;
+
+  }
+
+  if (!session) {
+
+    showToast("Session login tidak ditemukan.");
+
+    return;
+
+  }
+
+  const transactionId =
+    currentQrisTransaction.id ||
+    currentQrisTransaction.transaction_id;
+
+  if (!transactionId) {
+
+    showToast("ID transaksi tidak ditemukan.");
+
+    return;
+
+  }
+
+  if (refreshQrisStatus) {
+    refreshQrisStatus.disabled = true;
+  }
+
+  if (refreshQrisStatusText) {
+    refreshQrisStatusText.textContent = "Mengecek...";
+  }
+
+  if (qrisHistoryStatus) {
+    qrisHistoryStatus.textContent = "Menghubungi server...";
+  }
+
+  try {
+
+    const response =
+      await fetch(
+        `${BACKEND_URL}/topup/refresh/${encodeURIComponent(transactionId)}`,
+        {
+          method: "POST",
+
+          headers: {
+            Authorization:
+              `Bearer ${session.access_token}`
+          }
+        }
+      );
+
+    const result =
+      await response.json();
+
+    if (!response.ok) {
+
+      console.error("REFRESH QRIS ERROR:", result);
+
+      if (qrisHistoryStatus) {
+        qrisHistoryStatus.textContent =
+          result.message || "Gagal mengecek status.";
+      }
+
+      resetRefreshButton();
+
+      return;
+
+    }
+
+    const status =
+      String(result?.data?.status || "").toLowerCase();
+
+    // ========================================
+    // PAID
+    // ========================================
+
+    if (status === "paid") {
+
+      if (qrisHistoryTimer) {
+        clearInterval(qrisHistoryTimer);
+        qrisHistoryTimer = null;
+      }
+
+      if (qrisHistoryStatus) {
+        qrisHistoryStatus.textContent =
+          "Pembayaran berhasil. Koin sudah ditambahkan.";
+      }
+
+      if (qrisHistoryCountdown) {
+        qrisHistoryCountdown.textContent =
+          "Pembayaran berhasil ✓";
+      }
+
+      if (refreshQrisStatusText) {
+        refreshQrisStatusText.textContent = "Sudah Dibayar";
+      }
+
+      if (refreshQrisStatus) {
+        refreshQrisStatus.classList.add("success");
+      }
+
+      showToast("Pembayaran berhasil diproses.");
+
+      await loadHistory();
+
+      setTimeout(() => {
+        closeQrisModal();
+      }, 2000);
+
+      return;
+
+    }
+
+    // ========================================
+    // EXPIRED
+    // ========================================
+
+    if (status === "expired") {
+
+      if (qrisHistoryTimer) {
+        clearInterval(qrisHistoryTimer);
+        qrisHistoryTimer = null;
+      }
+
+      if (qrisHistoryStatus) {
+        qrisHistoryStatus.textContent =
+          "Pembayaran sudah kedaluwarsa.";
+      }
+
+      if (qrisHistoryCountdown) {
+        qrisHistoryCountdown.textContent =
+          "QRIS kedaluwarsa";
+      }
+
+      resetRefreshButton();
+
+      await loadHistory();
+
+      return;
+
+    }
+
+    // ========================================
+    // MASIH PENDING
+    // ========================================
+
+    if (qrisHistoryStatus) {
+      qrisHistoryStatus.textContent =
+        "Pembayaran belum diterima. Selesaikan pembayaran lalu cek lagi.";
+    }
+
+    resetRefreshButton();
+
+  } catch (error) {
+
+    console.error("REFRESH QRIS ERROR:", error);
+
+    if (qrisHistoryStatus) {
+      qrisHistoryStatus.textContent =
+        "Tidak dapat terhubung ke server.";
+    }
+
+    resetRefreshButton();
+
+  }
+
+}
+
+
+// ========================================
+// EVENT: CLOSE + REFRESH
+// ========================================
+
 if (closeQrisHistory) {
 
   closeQrisHistory.addEventListener(
@@ -577,7 +708,6 @@ if (closeQrisHistory) {
 
 }
 
-
 if (qrisHistoryOverlay) {
 
   qrisHistoryOverlay.addEventListener(
@@ -586,41 +716,40 @@ if (qrisHistoryOverlay) {
   );
 
 }
+
+if (refreshQrisStatus) {
+
+  refreshQrisStatus.addEventListener(
+    "click",
+    refreshQrisHistoryStatus
+  );
+
+}
+
+
 // ========================================
 // OPEN QRIS
 // ========================================
 
-async function openQris(
-  transaction
-) {
+async function openQris(transaction) {
 
   if (!session) {
 
-    showToast(
-      "Session login tidak ditemukan."
-    );
+    showToast("Session login tidak ditemukan.");
 
     return;
 
   }
 
+  if (!isQrisStillActive(transaction)) {
 
-  if (
-    !isQrisStillActive(
-      transaction
-    )
-  ) {
-
-    showToast(
-      "QRIS transaksi ini sudah kedaluwarsa."
-    );
+    showToast("QRIS transaksi ini sudah kedaluwarsa.");
 
     await loadHistory();
 
     return;
 
   }
-
 
   try {
 
@@ -637,42 +766,23 @@ async function openQris(
         }
       );
 
-
     const result =
       await response.json();
 
+    if (!response.ok || !result.status || !result.data) {
 
-    if (
-      !response.ok ||
-      !result.status ||
-      !result.data
-    ) {
-
-      showToast(
-        "Transaksi tidak dapat ditemukan."
-      );
+      showToast("Transaksi tidak dapat ditemukan.");
 
       return;
 
     }
 
-
     const payment =
       result.data;
 
+    if (String(payment.status).toLowerCase() !== "pending") {
 
-    if (
-      String(
-        payment.status
-      ).toLowerCase() !==
-      "pending"
-    ) {
-
-      showToast(
-        getStatusText(
-          payment.status
-        )
-      );
+      showToast(getStatusText(payment.status));
 
       await loadHistory();
 
@@ -680,29 +790,17 @@ async function openQris(
 
     }
 
-
-    // ========================================
-    // SIMPAN DATA QRIS
-    // ========================================
-
-openQrisModal({
-  ...payment,
-
-  id: transaction.id,
-  transaction_id: transaction.id
-});
-
+    openQrisModal({
+      ...payment,
+      id: transaction.id,
+      transaction_id: transaction.id
+    });
 
   } catch (error) {
 
-    console.error(
-      "OPEN QRIS ERROR:",
-      error
-    );
+    console.error("OPEN QRIS ERROR:", error);
 
-    showToast(
-      "Gagal membuka pembayaran."
-    );
+    showToast("Gagal membuka pembayaran.");
 
   }
 
@@ -713,49 +811,28 @@ openQrisModal({
 // CREATE HISTORY ITEM
 // ========================================
 
-function createHistoryItem(
-  transaction
-) {
+function createHistoryItem(transaction) {
 
   const item =
-    document.createElement(
-      "article"
-    );
-
+    document.createElement("article");
 
   item.className =
     "topup-history-item";
 
-
   const status =
-    String(
-      transaction.status || ""
-    ).toLowerCase();
-
+    String(transaction.status || "").toLowerCase();
 
   const statusText =
-    getStatusText(
-      status
-    );
-
+    getStatusText(status);
 
   const statusClass =
-    getStatusClass(
-      status
-    );
-
+    getStatusClass(status);
 
   const coins =
-    Number(
-      transaction.coins || 0
-    );
-
+    Number(transaction.coins || 0);
 
   const bonus =
-    Number(
-      transaction.bonus_coins || 0
-    );
-
+    Number(transaction.bonus_coins || 0);
 
   const totalCoins =
     Number(
@@ -763,14 +840,12 @@ function createHistoryItem(
       coins + bonus
     );
 
-
   const amount =
     Number(
       transaction.total_amount ??
       transaction.amount ??
       coins * 1000
     );
-
 
   item.innerHTML = `
     <div class="topup-history-main">
@@ -807,9 +882,7 @@ function createHistoryItem(
         </span>
 
         <span class="topup-history-date">
-          ${formatDate(
-            transaction.created_at
-          )}
+          ${formatDate(transaction.created_at)}
         </span>
 
       </div>
@@ -836,39 +909,26 @@ function createHistoryItem(
     }
   `;
 
-
-  // ========================================
-  // QRIS BUTTON
-  // ========================================
-
   if (
     status === "pending" &&
     isQrisStillActive(transaction)
   ) {
 
     const button =
-      item.querySelector(
-        ".history-qris-btn"
-      );
-
+      item.querySelector(".history-qris-btn");
 
     if (button) {
 
       button.addEventListener(
         "click",
         () => {
-
-          openQris(
-            transaction
-          );
-
+          openQris(transaction);
         }
       );
 
     }
 
   }
-
 
   return item;
 
@@ -881,61 +941,28 @@ function createHistoryItem(
 
 async function loadHistory() {
 
-  // ========================================
-  // REQUEST ID
-  // ========================================
-
   const requestId =
     ++historyLoadRequest;
-
 
   if (!historyList) {
     return;
   }
 
-
-  // ========================================
-  // LOADING
-  // ========================================
-
   if (historyLoading) {
-
-    historyLoading.hidden =
-      false;
-
+    historyLoading.hidden = false;
   }
-
 
   if (historyEmpty) {
-
-    historyEmpty.hidden =
-      true;
-
+    historyEmpty.hidden = true;
   }
 
-
-  // ========================================
-  // HAPUS HASIL LAMA
-  // ========================================
-
   historyList
-    .querySelectorAll(
-      ".topup-history-item"
-    )
-    .forEach(
-      (item) => {
-
-        item.remove();
-
-      }
-    );
-
+    .querySelectorAll(".topup-history-item")
+    .forEach((item) => {
+      item.remove();
+    });
 
   try {
-
-    // ========================================
-    // GET SESSION
-    // ========================================
 
     const {
       data: {
@@ -945,103 +972,54 @@ async function loadHistory() {
     } =
       await supabase.auth.getSession();
 
-
-    // Request ini sudah tidak terbaru
-    if (
-      requestId !==
-      historyLoadRequest
-    ) {
-
+    if (requestId !== historyLoadRequest) {
       return;
-
     }
 
-
-    // ========================================
-    // BELUM LOGIN
-    // ========================================
-
-    if (
-      sessionError ||
-      !currentSession
-    ) {
+    if (sessionError || !currentSession) {
 
       if (historyLoading) {
-
-        historyLoading.hidden =
-          true;
-
+        historyLoading.hidden = true;
       }
-
 
       if (historyEmpty) {
 
-        historyEmpty.hidden =
-          false;
-
+        historyEmpty.hidden = false;
 
         const title =
-          historyEmpty.querySelector(
-            "h2"
-          );
-
+          historyEmpty.querySelector("h2");
 
         const description =
-          historyEmpty.querySelector(
-            "p"
-          );
-
+          historyEmpty.querySelector("p");
 
         if (title) {
-
-          title.textContent =
-            "Belum Login";
-
+          title.textContent = "Belum Login";
         }
 
-
         if (description) {
-
           description.textContent =
             "Login terlebih dahulu untuk melihat riwayat Top Up.";
-
         }
 
       }
-
 
       return;
 
     }
 
-
-    session =
-      currentSession;
-
-
-    // ========================================
-    // 24 JAM TERAKHIR
-    // ========================================
+    session = currentSession;
 
     const twentyFourHoursAgo =
       new Date(
-        Date.now() -
-        24 * 60 * 60 * 1000
+        Date.now() - 24 * 60 * 60 * 1000
       ).toISOString();
-
-
-    // ========================================
-    // QUERY SUPABASE
-    // ========================================
 
     const {
       data: transactions,
       error
     } =
       await supabase
-        .from(
-          "topup_transactions"
-        )
+        .from("topup_transactions")
         .select(
           `
             id,
@@ -1057,162 +1035,71 @@ async function loadHistory() {
             paid_at
           `
         )
-        .eq(
-          "user_id",
-          currentSession.user.id
-        )
-        .gte(
-          "created_at",
-          twentyFourHoursAgo
-        )
-        .order(
-          "created_at",
-          {
-            ascending: false
-          }
-        );
+        .eq("user_id", currentSession.user.id)
+        .gte("created_at", twentyFourHoursAgo)
+        .order("created_at", { ascending: false });
 
-
-    // ========================================
-    // ABAIKAN REQUEST LAMA
-    // ========================================
-
-    if (
-      requestId !==
-      historyLoadRequest
-    ) {
-
+    if (requestId !== historyLoadRequest) {
       return;
-
     }
-
 
     if (error) {
-
-      console.error(
-        "LOAD HISTORY ERROR:",
-        error
-      );
-
+      console.error("LOAD HISTORY ERROR:", error);
       throw error;
-
     }
-
-
-    // ========================================
-    // STOP LOADING
-    // ========================================
 
     if (historyLoading) {
-
-      historyLoading.hidden =
-        true;
-
+      historyLoading.hidden = true;
     }
 
-
-    // ========================================
-    // EMPTY
-    // ========================================
-
-    if (
-      !transactions ||
-      transactions.length === 0
-    ) {
+    if (!transactions || transactions.length === 0) {
 
       if (historyEmpty) {
-
-        historyEmpty.hidden =
-          false;
-
+        historyEmpty.hidden = false;
       }
 
       return;
 
     }
 
+    transactions.forEach((transaction) => {
 
-    // ========================================
-    // RENDER
-    // ========================================
+      const item =
+        createHistoryItem(transaction);
 
-    transactions.forEach(
-      (transaction) => {
+      historyList.appendChild(item);
 
-        const item =
-          createHistoryItem(
-            transaction
-          );
-
-
-        historyList.appendChild(
-          item
-        );
-
-      }
-    );
-
+    });
 
   } catch (error) {
 
-    console.error(
-      "HISTORY ERROR:",
-      error
-    );
+    console.error("HISTORY ERROR:", error);
 
-
-    // Jangan tampilkan error
-    // dari request lama.
-
-    if (
-      requestId !==
-      historyLoadRequest
-    ) {
-
+    if (requestId !== historyLoadRequest) {
       return;
-
     }
-
 
     if (historyLoading) {
-
-      historyLoading.hidden =
-        true;
-
+      historyLoading.hidden = true;
     }
-
 
     if (historyEmpty) {
 
-      historyEmpty.hidden =
-        false;
-
+      historyEmpty.hidden = false;
 
       const title =
-        historyEmpty.querySelector(
-          "h2"
-        );
-
+        historyEmpty.querySelector("h2");
 
       const description =
-        historyEmpty.querySelector(
-          "p"
-        );
-
+        historyEmpty.querySelector("p");
 
       if (title) {
-
-        title.textContent =
-          "Gagal Memuat Riwayat";
-
+        title.textContent = "Gagal Memuat Riwayat";
       }
 
-
       if (description) {
-
         description.textContent =
           "Terjadi kesalahan saat mengambil transaksi.";
-
       }
 
     }
@@ -1232,48 +1119,28 @@ function setupRealtime() {
     return;
   }
 
-
-  // Jangan membuat channel
-  // berkali-kali.
-
   if (historyChannel) {
     return;
   }
 
-
   historyChannel =
     supabase
-      .channel(
-        `topup-history-${session.user.id}`
-      )
+      .channel(`topup-history-${session.user.id}`)
       .on(
         "postgres_changes",
         {
           event: "*",
-
           schema: "public",
-
           table: "topup_transactions",
-
-          filter:
-            `user_id=eq.${session.user.id}`
+          filter: `user_id=eq.${session.user.id}`
         },
         () => {
-
           loadHistory();
-
         }
       )
-      .subscribe(
-        (status) => {
-
-          console.log(
-            "TOP UP HISTORY REALTIME:",
-            status
-          );
-
-        }
-      );
+      .subscribe((status) => {
+        console.log("TOP UP HISTORY REALTIME:", status);
+      });
 
 }
 
@@ -1283,47 +1150,23 @@ function setupRealtime() {
 // ========================================
 
 supabase.auth.onAuthStateChange(
-  async (
-    event,
-    newSession
-  ) => {
+  async (event, newSession) => {
 
-    console.log(
-      "History auth event:",
-      event
-    );
+    console.log("History auth event:", event);
 
+    if (event === "SIGNED_OUT") {
 
-    // ========================================
-    // LOGOUT
-    // ========================================
-
-    if (
-      event === "SIGNED_OUT"
-    ) {
-
-      session =
-        null;
-
-
-      // Batalkan request lama
+      session = null;
 
       historyLoadRequest++;
 
-
-      // Hapus realtime channel
-
       if (historyChannel) {
 
-        supabase.removeChannel(
-          historyChannel
-        );
+        supabase.removeChannel(historyChannel);
 
-        historyChannel =
-          null;
+        historyChannel = null;
 
       }
-
 
       loadHistory();
 
@@ -1331,22 +1174,11 @@ supabase.auth.onAuthStateChange(
 
     }
 
+    if (event === "SIGNED_IN" && newSession) {
 
-    // ========================================
-    // LOGIN
-    // ========================================
-
-    if (
-      event === "SIGNED_IN" &&
-      newSession
-    ) {
-
-      session =
-        newSession;
-
+      session = newSession;
 
       await loadHistory();
-
 
       setupRealtime();
 
@@ -1369,31 +1201,17 @@ async function initialize() {
   } =
     await supabase.auth.getSession();
 
-
-  // ========================================
-  // SUDAH LOGIN
-  // ========================================
-
   if (currentSession) {
 
-    session =
-      currentSession;
-
+    session = currentSession;
 
     await loadHistory();
 
-
     setupRealtime();
-
 
     return;
 
   }
-
-
-  // ========================================
-  // GUEST
-  // ========================================
 
   await loadHistory();
 
