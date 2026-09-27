@@ -6,7 +6,7 @@ import { supabase } from "./supabase.js";
 ========================= */
 
 const BACKEND_URL =
-  "http://sg.ypnode.my.id:4020";
+  "https://dragon-store-api.gunawanstanlie.workers.dev/";
 
 
 /* =========================
