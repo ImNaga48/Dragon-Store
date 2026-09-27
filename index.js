@@ -160,6 +160,11 @@ const qrisStatus =
 const cancelQris =
   document.getElementById("cancelQris");
 
+const refreshQrisStatus =
+  document.getElementById("refreshQrisStatus");
+
+const refreshQrisStatusText =
+  document.getElementById("refreshQrisStatusText");
 
 // ========================================
 // BACKEND
@@ -409,7 +414,15 @@ function resetQrisView() {
       "Silakan selesaikan pembayaran melalui QRIS.";
 
   }
+  if (refreshQrisStatus) {
+  refreshQrisStatus.disabled = false;
+  refreshQrisStatus.classList.remove("success");
+}
 
+if (refreshQrisStatusText) {
+  refreshQrisStatusText.textContent =
+    "Cek Status Pembayaran";
+}
 }
 
 
@@ -1697,133 +1710,102 @@ function showQrisPayment(payment) {
 // COUNTDOWN
 // ========================================
 
-function startQrisCountdown(
-  expiredAt,
-  expiredMinutes
-) {
+const TOPUP_EXPIRE_MINUTES = 61;
+
+function startQrisCountdown(payment) {
 
   if (!qrisCountdown) {
     return;
   }
 
-
   if (qrisCountdownTimer) {
-
-    clearInterval(
-      qrisCountdownTimer
-    );
-
+    clearInterval(qrisCountdownTimer);
   }
 
+  let expiryTime = null;
 
-  let expiryTime;
+  // ========================================
+  // PRIORITAS 1: created_at + 61 menit
+  // (paling reliable — konsisten sama backend)
+  // ========================================
 
+  if (payment && payment.created_at) {
 
-  if (expiredAt) {
+    const created =
+      new Date(payment.created_at).getTime();
 
-    const parsed =
-      new Date(
-        String(
-          expiredAt
-        ).replace(
-          " ",
-          "T"
-        )
-      );
-
-
-    if (
-      !Number.isNaN(
-        parsed.getTime()
-      )
-    ) {
-
+    if (!Number.isNaN(created)) {
       expiryTime =
-        parsed.getTime();
-
+        created + TOPUP_EXPIRE_MINUTES * 60 * 1000;
     }
 
   }
 
+  // ========================================
+  // PRIORITAS 2: expired_at (asumsi UTC)
+  // ========================================
 
-  if (!expiryTime) {
+  if (!expiryTime && payment && payment.expired_at) {
 
-    const minutes =
-      Number(
-        expiredMinutes
-      ) || 60;
+    const parsed =
+      new Date(
+        String(payment.expired_at)
+          .replace(" ", "T") + "Z"
+      );
 
-
-    expiryTime =
-      Date.now() +
-      minutes * 60 * 1000;
+    if (!Number.isNaN(parsed.getTime())) {
+      expiryTime = parsed.getTime();
+    }
 
   }
 
+  // ========================================
+  // PRIORITAS 3: fallback now + 61 menit
+  // ========================================
+
+  if (!expiryTime) {
+    expiryTime =
+      Date.now() + TOPUP_EXPIRE_MINUTES * 60 * 1000;
+  }
 
   function updateCountdown() {
 
-    const remaining =
-      expiryTime -
-      Date.now();
-
+    const remaining = expiryTime - Date.now();
 
     if (remaining <= 0) {
 
-      clearInterval(
-        qrisCountdownTimer
-      );
-
-      qrisCountdownTimer =
-        null;
-
+      clearInterval(qrisCountdownTimer);
+      qrisCountdownTimer = null;
 
       qrisCountdown.textContent =
         "QRIS sudah kedaluwarsa.";
 
-
       if (qrisStatus) {
-
         qrisStatus.textContent =
           "Silakan buat pembayaran baru.";
-
       }
 
       return;
-
     }
 
-
     const totalSeconds =
-      Math.floor(
-        remaining / 1000
-      );
-
+      Math.floor(remaining / 1000);
 
     const minutes =
-      Math.floor(
-        totalSeconds / 60
-      );
-
+      Math.floor(totalSeconds / 60);
 
     const seconds =
       totalSeconds % 60;
-
 
     qrisCountdown.textContent =
       `Berlaku ${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 
   }
 
-
   updateCountdown();
 
-
   qrisCountdownTimer =
-    setInterval(
-      updateCountdown,
-      1000
-    );
+    setInterval(updateCountdown, 1000);
 
 }
 
@@ -2107,10 +2089,7 @@ if (checkoutBtn) {
         );
 
 
-        startQrisCountdown(
-          payment.expired_at,
-          payment.expired_menit
-        );
+        startQrisCountdown(payment);
 
 
         startPaymentStatusCheck();
@@ -2502,10 +2481,7 @@ async function initialize() {
              * waktu expired transaksi lama.
              */
 
-            startQrisCountdown(
-              payment.expired_at,
-              payment.expired_menit
-            );
+            startQrisCountdown(payment);
 
 
             /*
